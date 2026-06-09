@@ -21,7 +21,7 @@ numberButtons.forEach((num) =>
         if (operationReq == "") {
             a += num.value;
             display.innerText = a;
-        } else {
+        } else if (operationReq !== "" && a !== "") {
             b += num.value;
             display.innerText = a + operationReq + b;
         }
@@ -52,12 +52,9 @@ decimalButton.addEventListener("click", () => {
 
 operationButtons.forEach((symbol) =>
     symbol.addEventListener("click", () => {
-        if (operationReq == "" && a !== 0) {
+        if (operationReq == "" && a !== "") {
             operationReq = symbol.name;
             display.innerText += symbol.name;
-        } else if (b == 0){
-            operationReq = symbol.name;
-            display.innerText = a + operationReq;
         }
     })
 );
@@ -97,19 +94,21 @@ equalButton.addEventListener("click", () => {
         if (error == "") {
             display.innerText = Math.round(sum * 100) / 100;
 
-            a = Math.round(sum * 100) / 100;
+            a = "";
             b = "";
             sum = "";
             operationReq = "";
-        
         } else {
             display.innerText = error;
             
             setTimeout(() => {
-                display.innerText = a;
-                b = "";
-                operationReq = "";
+                display.innerText = "";
             }, 2000)
+
+        a = ""
+        b = "";
+        sum = "";
+        operationReq = "";
         error = "";
         }
     };    
