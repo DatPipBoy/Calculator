@@ -4,6 +4,7 @@ let a = "";
 let b = "";
 let operationReq = "";
 let error = "";
+let resultShown = false;
 
 //html linked variables
 const display = document.querySelector("#textArea");
@@ -18,10 +19,17 @@ const equalButton = document.querySelector(".equal");
 
 numberButtons.forEach((num) => 
     num.addEventListener("click", () => {
-        if (operationReq == "") {
+        if (operationReq === "" && resultShown === true) {
+            a = num.value;
+            display.innerText = a;
+            resultShown = false;
+        } else if (a === "" && operationReq === "") {
+            a = num.value;
+            display.innerText = a;
+        } else if (a !== "" && operationReq == "" && resultShown === false) {
             a += num.value;
             display.innerText = a;
-        } else if (operationReq !== "" && a !== "") {
+        } else if (operationReq !== "") {
             b += num.value;
             display.innerText = a + operationReq + b;
         }
@@ -33,17 +41,15 @@ numberButtons.forEach((num) =>
 decimalButton.addEventListener("click", () => {
     if (operationReq === "") {
         if (!a.includes(".")) {
-            if (a === "") {
-                a += ".";
-                display.innerText = a;
-            }
-        } else {
-            if (!b.includes(".")) {
-                if (b === "") {
-                    b += ".";
-                    display.innerText = a + operationReq + b;   
-                }
-            }
+            a += ".";
+            display.innerText = a;
+            console.log('a decimal');
+        }
+    } else {    
+        if (!b.includes(".")) {
+                b += ".";
+                display.innerText = a + operationReq + b; 
+                console.log("b decimal")    
         }
     }  
 });
@@ -55,6 +61,8 @@ operationButtons.forEach((symbol) =>
         if (operationReq == "" && a !== "") {
             operationReq = symbol.name;
             display.innerText += symbol.name;
+
+            console.log("after operation pressed");
         }
     })
 );
@@ -68,6 +76,7 @@ clearButton.addEventListener("click", () => {
     operationReq = "";
     error = "";
     display.innerText = "";
+    resultShown = false;
 });
 
 // Undo Button logic
@@ -90,11 +99,15 @@ undoButton.addEventListener("click", () => {
 equalButton.addEventListener("click", () => {
     if (a !== "" && b !== "" && operationReq !== "") {
         operate(a, b, operationReq);
+        resultShown = true;
 
         if (error == "") {
             display.innerText = Math.round(sum * 100) / 100;
 
-            a = "";
+            a = Math.round(sum * 100) / 100;
+            checkSum = a;
+
+            console.log("after equal pressed");
             b = "";
             sum = "";
             operationReq = "";
@@ -102,10 +115,8 @@ equalButton.addEventListener("click", () => {
             display.innerText = error;
             
             setTimeout(() => {
-                display.innerText = "";
+                display.innerText = a;
             }, 2000)
-
-        a = ""
         b = "";
         sum = "";
         operationReq = "";
@@ -153,7 +164,7 @@ function multiply(a, b) {
 function divide(a, b) {
     if (a != 0 && b != 0) {
         return sum = +a / +b;
-    } else {
+    } else if (b == 0) {
         return error = "Cannot Divide by 0!";
     }
 }
