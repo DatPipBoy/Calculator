@@ -23,15 +23,19 @@ numberButtons.forEach((num) =>
             a = num.value;
             display.innerText = a;
             resultShown = false;
+            console.log("first num if");
         } else if (a === "" && operationReq === "") {
             a = num.value;
             display.innerText = a;
-        } else if (a !== "" && operationReq == "" && resultShown === false) {
+            console.log("second num if");
+        } else if (a !== "" && operationReq === "" && resultShown === false) {
             a += num.value;
             display.innerText = a;
-        } else if (operationReq !== "") {
+            console.log("third num if");
+        } else if (operationReq !== "" && resultShown === false) {
             b += num.value;
             display.innerText = a + operationReq + b;
+            console.log("fourth num if");
         }
     })
 );
@@ -59,6 +63,32 @@ operationButtons.forEach((symbol) =>
         if (operationReq == "" && a !== "") {
             operationReq = symbol.name;
             display.innerText += symbol.name;
+            console.log("first if");
+            resultShown = false;
+        } else if (operationReq !== "" && a !== "" && b !== "") {
+            operate(a, b, operationReq);
+
+            console.log("second if");
+            if (error == "") {
+                display.innerText = Math.round(sum * 100) / 100 + symbol.name;
+
+                a = Math.round(sum * 100) / 100;
+                b = "";
+                sum = a;
+                operationReq = symbol.name;
+                console.log("first nested if");
+            } else {
+                display.innerText = error;
+            
+                setTimeout(() => {
+                    display.innerText = a;
+                }, 2000)
+            b = "";
+            sum = "";
+            operationReq = "";
+            error = "";
+            console.log("second nested if");
+            }
         }
     })
 );
