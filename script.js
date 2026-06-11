@@ -43,13 +43,11 @@ decimalButton.addEventListener("click", () => {
         if (!a.includes(".")) {
             a += ".";
             display.innerText = a;
-            console.log('a decimal');
         }
     } else {    
         if (!b.includes(".")) {
                 b += ".";
-                display.innerText = a + operationReq + b; 
-                console.log("b decimal")    
+                display.innerText = a + operationReq + b;    
         }
     }  
 });
@@ -61,8 +59,6 @@ operationButtons.forEach((symbol) =>
         if (operationReq == "" && a !== "") {
             operationReq = symbol.name;
             display.innerText += symbol.name;
-
-            console.log("after operation pressed");
         }
     })
 );
@@ -105,9 +101,6 @@ equalButton.addEventListener("click", () => {
             display.innerText = Math.round(sum * 100) / 100;
 
             a = Math.round(sum * 100) / 100;
-            checkSum = a;
-
-            console.log("after equal pressed");
             b = "";
             sum = "";
             operationReq = "";
