@@ -25,7 +25,7 @@ numberButtons.forEach((num) =>
             resultShown = false;
         } else if (a === "" && operationReq === "") {
             a = num.value;
-            display.innerText = a;;
+            display.innerText = a;
         } else if (a !== "" && operationReq === "" && resultShown === false) {
             a += num.value;
             display.innerText = a;
@@ -41,15 +41,16 @@ numberButtons.forEach((num) =>
 decimalButton.addEventListener("click", () => {
     if (operationReq === "") {
         if (a === "") {
-            a = "0."
+            a = "0.";
             display.innerText = a;
         } else if (!a.includes(".")) {
             a += ".";
+            resultShown = false;
             display.innerText = a;
         }
     } else {    
         if (b === "") {
-            b = "0."
+            b = "0.";
             display.innerText = a + operationReq + b;
         } else if (!b.includes(".")) {
                 b += ".";
@@ -66,6 +67,9 @@ operationButtons.forEach((symbol) =>
             operationReq = symbol.name;
             display.innerText += symbol.name;
             resultShown = false;
+        } else if (operationReq !== "" && a !== "" && b === "") {
+            operationReq = symbol.name;
+            display.innerText = a + symbol.name;
         } else if (operationReq !== "" && a !== "" && b !== "") {           
             operate(a, b, operationReq);
 
@@ -116,7 +120,7 @@ undoButton.addEventListener("click", () => {
         a = a.toString().slice(0, -1);
         display.innerText = a;
     }
-})
+});
 
 //Equal button and operation function call
 
@@ -144,10 +148,11 @@ equalButton.addEventListener("click", () => {
             setTimeout(() => {
                 display.innerText = a;
             }, 2000)
-        b = "";
-        sum = "";
-        operationReq = "";
-        error = "";
+        
+            b = "";
+            sum = "";
+            operationReq = "";
+            error = "";
         }
     };    
 });
@@ -172,26 +177,26 @@ function operate(a,b, operationReq) {
             divide(a, b);
             break;
     }
-}
+};
 
 //Math Functions
 
 function add(a, b) {
     return sum = +a + +b;
-}
+};
 
 function subtract(a, b) {
     return sum = +a - +b;
-}
+};
 
 function multiply(a, b) {
     return sum = +a * +b;
-}
+};
 
 function divide(a, b) {
-    if (a != 0 && b != 0) {
+    if (b != 0) {
         return sum = +a / +b;
     } else if (b == 0) {
         return error = "Cannot Divide by 0!";
     }
-}
+};
